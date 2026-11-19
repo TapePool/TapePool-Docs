@@ -14,9 +14,13 @@ npm run check:cn   # the tapepool-content-cn checker on the Chinese pages
 ## Deploy
 
 https://docs.tapepool.io runs on Railway, deployed from the `main` branch of
-[TapePool/TapePool-Docs](https://github.com/TapePool/TapePool-Docs). Railway serves the committed `index.html` with
-`node preview.mjs` (see `railway.json`); it does not rebuild the page, because the content checks need the TapePool
-repository next to this one. So after editing `src/`, run `npm run build` and commit `index.html` with the change.
+[TapePool/TapePool-Docs](https://github.com/TapePool/TapePool-Docs). Every push to `main` deploys.
+Railway serves the committed `index.html` with `node preview.mjs`; it does not rebuild the page, because the content
+checks need the TapePool repository next to this one. So after editing `src/`, run `npm run build` and commit
+`index.html` with the change.
+
+The service settings live in Railway (project `tapepool-docs`, service `tapepool-docs`), not in a config file: build
+command `echo …` (no build), start command `node preview.mjs`, health check `/`, restart on failure.
 
 ## Layout
 
