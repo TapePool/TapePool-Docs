@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="description" content="Documentation for TapePool, the BEM lending pool on X Layer for TapeOut miners: how lending and borrowing work, the public credit-rule circuit, terms and fees, repayment, risks and who can change what. English and 中文.">
+<meta name="color-scheme" content="light dark">
+<title>TapePool Docs</title>
+<script>
+// Theme and language before first paint. Language: ?lang=zh|en, then the saved choice ('tp-lang', the key the
+// TapePool app and landing use too), then the browser languages (the first zh-* before any en-* selects Chinese).
+try{const t=localStorage.getItem('tapepool-docs-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch{}
+// The app stores Chinese as 'cn'; the landing links use ?lang=zh. Both are accepted.
+(function(){const norm=(v)=>v==='zh'||v==='cn'?'zh':v==='en'?'en':null;let l=norm(new URLSearchParams(location.search).get('lang'));if(!l){try{l=norm(localStorage.getItem('tp-lang'))}catch{}}
+if(!l){l='en';for(const x of navigator.languages||[navigator.language||'']){const s=String(x).toLowerCase();if(s.startsWith('zh')){l='zh';break}if(s.startsWith('en'))break}}
+document.documentElement.lang=l==='zh'?'zh-CN':'en';document.documentElement.dataset.lang=l})();
+</script>
+<style>
+{{STYLE}}
+</style>
+</head>
+<body>
+<a class="skip" href="#content" data-i18n="skip">Skip to content</a>
+<header class="topbar">
+  <button class="control mobile-menu" id="menu" aria-expanded="false" aria-controls="sidebar"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+  <a class="brand" href="#overview" aria-label="TapePool Docs">
+    <img class="logo logo-light" src="img/brand/tapepool-lockup.svg" alt="TapePool" width="125" height="32">
+    <img class="logo logo-dark" src="img/brand/tapepool-lockup-dark.svg" alt="TapePool" width="125" height="32">
+    <small data-i18n="docs">Docs</small>
+  </a>
+  <div class="header-end">
+    <button class="control search-open" id="search-open"><svg class="search-icon" viewBox="0 0 16 16" width="15" height="15" aria-hidden="true"><circle cx="7" cy="7" r="4.6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10.4 10.4 14 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="search-label" data-i18n="searchButton">Search docs…</span><kbd>Ctrl K</kbd></button>
+    <div class="lang-switch" role="group" aria-label="Language / 语言"><button type="button" data-lang="en" lang="en">EN</button><button type="button" data-lang="zh" lang="zh-CN">中文</button></div>
+    <button class="control theme-button" id="theme" aria-label="Switch theme"><span class="theme-icon" aria-hidden="true"></span></button>
+    <a class="control launch" href="https://app.tapepool.io" target="_blank" rel="noreferrer" data-i18n="launch">Launch app</a>
+  </div>
+</header>
+<button class="scrim" id="scrim" aria-label="Close navigation"></button>
+<aside class="sidebar" id="sidebar">
+  <nav class="nav-scroll" id="nav" aria-label="Documentation"></nav>
+  <div class="sidebar-foot">
+    <div class="foot-title" data-i18n="links">Links</div>
+    <a class="external-link" href="https://app.tapepool.io" target="_blank" rel="noreferrer"><span data-i18n="app">App</span><span aria-hidden="true">↗</span></a>
+    <a class="external-link" href="https://tapepool.io" target="_blank" rel="noreferrer"><span data-i18n="website">Website</span><span aria-hidden="true">↗</span></a>
+    <a class="external-link" href="https://x.com/Tape_Pool" target="_blank" rel="noreferrer"><span>X · @Tape_Pool</span><span aria-hidden="true">↗</span></a>
+    <a class="external-link" href="https://tapeout.net" target="_blank" rel="noreferrer"><span>TapeOut</span><span aria-hidden="true">↗</span></a>
+    <div class="edition" id="edition"></div>
+  </div>
+</aside>
+<div class="shell">
+  <main id="content" tabindex="-1">
+    <div class="article-top"><span class="breadcrumb" id="breadcrumb"></span><button class="control copy-button" id="copy"></button></div>
+    <article id="article"></article>
+    <nav class="pager" id="pager" aria-label="Previous and next page"></nav>
+    <p class="updated" id="updated"></p>
+  </main>
+  <aside class="toc" aria-label="On this page"><b data-i18n="onThisPage">On this page</b><nav id="toc"></nav>
+    <div class="toc-note"><span data-i18n="aboutTitle">About these docs</span><span class="toc-note-body" data-i18n="aboutBody">Facts come from the contracts and the frozen specification.</span><span data-i18n="aboutShots">Screenshots use sample data.</span></div>
+  </aside>
+</div>
+<dialog id="search-dialog" aria-label="Search">
+  <div class="search-head"><input id="search-input" type="search" autocomplete="off"><button class="control" id="search-close">Esc</button></div>
+  <div class="results" id="results" aria-live="polite"></div>
+  <div class="search-foot" data-i18n="searchFoot">Searches every page in your browser. Nothing is sent anywhere.</div>
+</dialog>
+<dialog id="zoom-dialog" aria-label="Image"><button class="control zoom-close" id="zoom-close" data-i18n="close">Close</button><img id="zoom-img" alt=""></dialog>
+<script>
+const pages = {{PAGES}};
+const meta = {{META}};
+const UI = {
+  en: { skip: 'Skip to content', menu: 'Menu', docs: 'Docs', searchButton: 'Search docs…', links: 'Links', website: 'Website', app: 'App', launch: 'Launch app', onThisPage: 'On this page',
+    aboutTitle: 'About these docs', aboutBody: 'Facts come from the contracts and the frozen specification.', aboutShots: 'Screenshots use sample data.',
+    searchFoot: 'Searches every page in your browser. Nothing is sent anywhere.', close: 'Close', placeholder: 'Search terms, fees, voucher, seize…',
+    noResults: (q) => `No results for “${q}”. Try fee, voucher, seize or withdraw.`, copy: 'Copy page', copied: 'Copied', selected: 'Selected, press Ctrl+C',
+    prev: 'Previous', next: 'Next', zoom: 'Click to enlarge', toLight: 'Switch to light theme', toDark: 'Switch to dark theme', openNav: 'Open navigation', closeNav: 'Close navigation',
+    titleSuffix: 'TapePool Docs', edition: (e) => `TapePool · X Layer mainnet<br>${e} edition`,
+    updated: (r) => `Content reviewed ${r}. Nothing here is financial advice.` },
+  zh: { skip: '跳到正文', menu: '目录', docs: '文档', searchButton: '搜索文档…', links: '链接', website: '官网', app: '应用', launch: '启动应用', onThisPage: '本页内容',
+    aboutTitle: '关于本文档', aboutBody: '内容依据合约与已冻结的规范。', aboutShots: '截图均为示例数据。',
+    searchFoot: '在您的浏览器中搜索全部页面，不会向任何地方发送数据。', close: '关闭', placeholder: '搜索费用、凭证、没收、提款…',
+    noResults: (q) => `没有找到“${q}”的结果。可以试试：费用、凭证、没收、提款。`, copy: '复制本页', copied: '已复制', selected: '已选中，请按 Ctrl+C',
+    prev: '上一页', next: '下一页', zoom: '点击放大', toLight: '切换到浅色主题', toDark: '切换到深色主题', openNav: '打开目录', closeNav: '关闭目录',
+    titleSuffix: 'TapePool 文档', edition: (e) => `TapePool · X Layer 主网<br>${e}`,
+    updated: (r) => `内容审阅于 ${r}。本文档不构成任何投资建议。` },
+};
+const $ = (id) => document.getElementById(id);
+const article = $('article'), nav = $('nav'), toc = $('toc'), dialog = $('search-dialog'), input = $('search-input');
+let lang = document.documentElement.dataset.lang === 'zh' ? 'zh' : 'en';
+const T = () => UI[lang];
+const view = (p) => (lang === 'zh' && p.zh ? p.zh : p);
+const textOf = (html) => { const el = document.createElement('div'); el.innerHTML = html.replace(/<\/(p|li|h2|h3|tr|td|th|figcaption|dt|dd|summary)>/g, '</$1> '); el.querySelectorAll('img').forEach((i) => i.remove()); return (el.textContent || '').replace(/\s+/g, ' ').trim(); };
+const index = { en: null, zh: null };
+const searchIndex = () => (index[lang] ??= pages.map((p) => { const v = view(p); return { id: p.id, group: v.group, title: v.title, lead: v.lead, plain: textOf(v.body) }; }));
+let current = null;
+// theme (declared before the first paint, which labels the button)
+const media = window.matchMedia('(prefers-color-scheme: dark)');
+const themeNow = () => document.documentElement.dataset.theme || (media.matches ? 'dark' : 'light');
+function paintThemeButton() { const t = themeNow(); $('theme').setAttribute('aria-label', t === 'dark' ? T().toLight : T().toDark); $('theme').title = $('theme').getAttribute('aria-label'); }
+$('theme').onclick = () => { const t = themeNow() === 'dark' ? 'light' : 'dark'; document.documentElement.dataset.theme = t; try { localStorage.setItem('tapepool-docs-theme', t); } catch {} paintThemeButton(); };
+media.addEventListener('change', paintThemeButton);
+
+function paintChrome() {
+  const t = T();
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+  document.documentElement.dataset.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach((el) => { el.textContent = t[el.dataset.i18n]; });
+  document.querySelectorAll('.lang-switch button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
+  $('menu').setAttribute('aria-label', t.openNav); $('scrim').setAttribute('aria-label', t.closeNav);
+  $('search-open').setAttribute('aria-label', t.searchButton); input.placeholder = t.placeholder;
+  $('edition').innerHTML = t.edition(meta[lang].edition);
+  $('updated').textContent = t.updated(meta[lang].reviewed);
+  const groups = [...new Set(pages.map((p) => view(p).group))];
+  nav.innerHTML = groups.map((g) => `<section class="nav-group"><h2>${g}</h2>${pages.filter((p) => view(p).group === g).map((p) => `<a href="#${p.id}" data-page="${p.id}">${view(p).nav || view(p).title}</a>`).join('')}</section>`).join('');
+  paintThemeButton();
+}
+function closeMenu() { document.body.classList.remove('menu-open'); $('menu').setAttribute('aria-expanded', 'false'); }
+// A hash (#borrow) names the page; a clean path (/borrow) works too when the host serves the page for it.
+function route() {
+  const hash = decodeURIComponent(location.hash.slice(1));
+  const seg = hash ? '' : (decodeURIComponent(location.pathname).split('/').filter(Boolean).pop() || '');
+  const [id, anchor] = (hash || (pages.some((p) => p.id === seg) ? seg : pages[0].id)).split('/');
+  return { p: pages.find((x) => x.id === id), anchor };
+}
+function render(force) {
+  const { p, anchor } = route();
+  if (!p) { location.replace('#' + pages[0].id); return; }
+  const changed = !current || current.id !== p.id;
+  current = p;
+  const v = view(p), t = T();
+  document.title = v.title + ' | ' + t.titleSuffix;
+  $('breadcrumb').textContent = v.group;
+  article.innerHTML = `<h1>${v.title}</h1><p class="lead">${v.lead}</p>${v.body}`;
+  toc.innerHTML = '';
+  article.querySelectorAll('h2').forEach((h, i) => { h.id = p.id + '-' + i; const a = document.createElement('a'); a.href = '#' + p.id + '/' + i; a.textContent = h.textContent; toc.append(a); });
+  article.querySelectorAll('figure img').forEach((img) => { img.loading = 'lazy'; img.decoding = 'async'; img.tabIndex = 0; img.title = t.zoom; });
+  nav.querySelectorAll('a').forEach((a) => a.dataset.page === p.id ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current'));
+  const i = pages.indexOf(p);
+  $('pager').innerHTML = (i > 0 ? `<a href="#${pages[i - 1].id}"><small>${t.prev}</small>${view(pages[i - 1]).title}</a>` : '<span></span>') + (i < pages.length - 1 ? `<a class="next" href="#${pages[i + 1].id}"><small>${t.next}</small>${view(pages[i + 1]).title}</a>` : '<span></span>');
+  closeMenu();
+  if (anchor !== undefined && /^\d+$/.test(anchor)) requestAnimationFrame(() => $(p.id + '-' + anchor)?.scrollIntoView());
+  else if (changed && !force) window.scrollTo(0, 0);
+  if (changed) $('content').focus({ preventScroll: true });
+  $('copy').textContent = t.copy;
+}
+function setLang(l) {
+  if (l === lang) return;
+  lang = l;
+  try { localStorage.setItem('tp-lang', l === 'zh' ? 'cn' : 'en'); } catch {}
+  const u = new URL(location.href); u.searchParams.set('lang', l); history.replaceState(null, '', u);
+  paintChrome(); render(true);
+}
+document.querySelectorAll('.lang-switch button').forEach((b) => { b.onclick = () => setLang(b.dataset.lang); });
+paintChrome();
+window.addEventListener('hashchange', () => render()); render();
+document.querySelector('.skip').onclick = (e) => { e.preventDefault(); $('content').focus(); $('content').scrollIntoView(); };
+$('menu').onclick = () => { const open = document.body.classList.toggle('menu-open'); $('menu').setAttribute('aria-expanded', String(open)); };
+$('scrim').onclick = closeMenu;
+// search (in the current language)
+function search() {
+  const q = input.value.trim().toLowerCase();
+  const words = q.split(/\s+/).filter(Boolean);
+  const matches = searchIndex().filter((p) => { const hay = (p.title + ' ' + p.lead + ' ' + p.plain).toLowerCase(); return words.every((w) => hay.includes(w)); });
+  const results = $('results'); results.replaceChildren();
+  if (!matches.length) { const e = document.createElement('p'); e.className = 'empty'; e.textContent = T().noResults(input.value.trim()); results.append(e); return; }
+  matches.forEach((p) => {
+    const a = document.createElement('a'); a.className = 'result'; a.href = '#' + p.id;
+    const g = document.createElement('small'); g.textContent = p.group;
+    const t = document.createElement('strong'); t.textContent = p.title;
+    const x = document.createElement('p'); const pos = words.length ? p.plain.toLowerCase().indexOf(words[0]) : -1;
+    x.textContent = pos >= 0 ? (pos > 40 ? '…' : '') + p.plain.slice(Math.max(0, pos - 40), pos + 150).trim() + '…' : p.lead;
+    a.append(g, t, x); a.onclick = () => { dialog.close(); if (current.id === p.id) render(); }; results.append(a);
+  });
+}
+function openSearch() { dialog.showModal(); input.value = ''; search(); input.focus(); }
+$('search-open').onclick = openSearch; $('search-close').onclick = () => dialog.close();
+input.addEventListener('input', search);
+input.addEventListener('keydown', (e) => { if (e.key === 'ArrowDown') { e.preventDefault(); document.querySelector('.result')?.focus(); } if (e.key === 'Enter' && !e.isComposing) document.querySelector('.result')?.click(); });
+document.addEventListener('keydown', (e) => { if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); dialog.open ? dialog.close() : openSearch(); } if (e.key === 'Escape') closeMenu(); });
+for (const d of [dialog, $('zoom-dialog')]) d.addEventListener('click', (e) => { if (e.target === d) d.close(); });
+// image zoom
+const zoom = $('zoom-dialog');
+function openZoom(img) { $('zoom-img').src = img.currentSrc || img.src; $('zoom-img').alt = img.alt; zoom.showModal(); }
+article.addEventListener('click', (e) => { const img = e.target.closest('figure img'); if (img) openZoom(img); });
+article.addEventListener('keydown', (e) => { const img = e.target.closest?.('figure img'); if (img && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openZoom(img); } });
+$('zoom-close').onclick = () => zoom.close();
+// copy page as text
+$('copy').onclick = async () => {
+  const b = $('copy'), v = view(current), t = T(); const text = v.title + '\n\n' + v.lead + '\n\n' + textOf(v.body.replace(/<\/(p|li|h2|h3|tr|figcaption|dd|summary)>/g, '</$1>\n\n'));
+  try { await navigator.clipboard.writeText(text); b.textContent = t.copied; }
+  catch { const r = document.createRange(); r.selectNodeContents(article); const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = t.selected; }
+  setTimeout(() => { b.textContent = T().copy; }, 2200);
+};
+</script>
+</body>
+</html>

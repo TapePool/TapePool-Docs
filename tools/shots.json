@@ -1,0 +1,23 @@
+[
+  {"name": "dashboard", "fixture": "connected", "full": true},
+  {"name": "markets", "fixture": "keeper-absent", "hash": "#/app/markets"},
+  {"name": "connect", "fixture": "picker", "selector": ".mdl-back > .wide"},
+  {"name": "statusbar", "fixture": "markets", "selector": "footer"},
+  {"name": "view", "fixture": "view", "full": true},
+  {"name": "tape", "fixture": "disconnected", "hash": "#/app/tape", "wait": 7000},
+  {"name": "supply", "fixture": "supply-modal", "selector": "section.mdl"},
+  {"name": "withdraw", "fixture": "withdraw-modal", "selector": "section.mdl"},
+  {"name": "pool-supply", "fixture": "keeper-absent", "selector": "section.v2-card >> nth=0"},
+  {"name": "pool-borrow", "fixture": "keeper-absent", "selector": "section.v2-card >> nth=1"},
+  {"name": "pool-credit", "fixture": "keeper-absent", "selector": "section.v2-card >> nth=2"},
+  {"name": "rigs-top", "fixture": "rigs-all", "full": true, "clip": {"x": 0, "y": 0, "width": 1360, "height": 1040}},
+  {"name": "rig-rules", "fixture": "rigs-all", "selector": "section.v2-card >> nth=0"},
+  {"name": "screen-note", "fixture": "screen-note", "selector": "section.mdl"},
+  {"name": "flow-fresh", "fixture": "flow-fresh", "full": true},
+  {"name": "quote", "fixture": "flow-fresh", "selector": "section.v2-card >> nth=2"},
+  {"name": "harvest-card", "fixture": "flow-mined-choice", "selector": "section.v2-card >> nth=3"},
+  {"name": "loan-active", "fixture": "loan-active", "full": true},
+  {"name": "repay", "fixture": "repay-modal", "selector": "section.mdl"},
+  {"name": "release-card", "fixture": "loan-cleared", "selector": "section.v2-card >> nth=1"},
+  {"name": "loan-flagged", "fixture": "loan-flagged", "full": true}
+]

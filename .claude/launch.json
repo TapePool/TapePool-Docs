@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "docs-preview",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["preview.mjs"],
+      "port": 4320
+    },
+    {
+      "name": "tapepool-app-fixtures",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "D:/Tape Pool/app", "run", "dev", "--", "--port", "5180", "--strictPort"],
+      "port": 5180
+    }
+  ]
+}

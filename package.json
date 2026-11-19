@@ -1,0 +1,17 @@
+{
+  "name": "tapepool-docs",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Documentation site for TapePool, the BEM lending pool on X Layer for TapeOut miners (English and 中文).",
+  "scripts": {
+    "build": "node build.mjs",
+    "preview": "node preview.mjs",
+    "start": "node preview.mjs",
+    "check:cn": "node tools/check-cn.mjs",
+    "shots": "node tools/screenshots.mjs && node tools/screenshots.mjs --lang zh"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
