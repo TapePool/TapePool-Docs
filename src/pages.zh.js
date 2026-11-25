@@ -91,7 +91,7 @@ ${table(['内容', '时间', '状态'], [
 <h2>上线时的条款</h2>
 <ul>
 <li>BEM 固定费用：7 天 0.25%，14 天 0.5%，每笔贷款至少 0.001 BEM。详见<a href="#terms">借贷条款与费用</a>。</li>
-<li>运营费：<strong>0 OKB</strong>。<strong>2026 年 12 月 15 日</strong>之前，keeper 钱包承担矿机数据推送和计划内领取收益的 LayerZero 费用。借款人只需支付 X Layer 上的 gas。</li>
+<li>运营费：<strong>0 OKB</strong>。截至 <strong>2026 年 12 月 31 日</strong>，keeper 钱包承担矿机数据推送和计划内领取收益的 LayerZero 费用。借款人只需支付 X Layer 上的 gas。</li>
 <li>滞纳金：<strong>0</strong>。所有者已公开承诺在 2026 年 12 月 7 日前保持为 0；之后若设定费率，只适用于新贷款。</li>
 </ul>
 <h2>后续计划</h2>
@@ -364,7 +364,7 @@ ${table(['限制', '规则'], [
 <ul>
 <li><strong>X Layer gas（OKB）：</strong>创建矿机代理、转入凭证、借款、还款和取回凭证。X Layer 的 gas 很低（基础费用约 0.02 gwei）。</li>
 <li><strong>BSC gas（BNB）：</strong>只有在您自己领取收益或自己推送报告时才需要。</li>
-<li>2026 年 12 月 15 日之前，keeper 钱包承担报告推送和计划内领取收益的 LayerZero 费用。</li>
+<li>截至 2026 年 12 月 31 日，keeper 钱包承担报告推送和计划内领取收益的 LayerZero 费用。</li>
 </ul>
 <p>任何贷款都不能跨越 BEM 的第一次减半：如果借款期限会在减半前 30 天之内结束（2030 年 8 月），借款会被拒绝。</p>`},
 
@@ -480,7 +480,7 @@ ${table(['位', '输入', '何时为 1'], [
 <p>当前数据源于 2026 年 11 月 16 日部署并锁定。</p>
 <h2>谁来发送报告</h2>
 <ul>
-<li><strong>keeper</strong>：在您点击<em>刷新矿机数据</em>时推送报告，限额为每台矿机每个 UTC 日 3 次、任意连续 7 天内 10 次。2026 年 12 月 15 日之前由它支付 LayerZero 费用。</li>
+<li><strong>keeper</strong>：在您点击<em>刷新矿机数据</em>时推送报告，限额为每台矿机每个 UTC 日 3 次、任意连续 7 天内 10 次。截至 2026 年 12 月 31 日，由它支付 LayerZero 费用。</li>
 <li><strong>任何人</strong>：都可以在 BSC 上推送报告，用 BNB 支付 LayerZero 费用。如果 keeper 没有响应，应用会提示您从自己的钱包推送。2026 年 11 月，一次推送 16 台矿机的 LayerZero 费用约为 0.002 BNB。</li>
 </ul>
 <h2>数据源停止时</h2>
@@ -671,7 +671,7 @@ faq:{group:'参考',title:'常见问题',lead:'矿工和出借人最常问的问
 <details><summary>为什么矿机需要满 3 天并通过筛查？</summary><div><p>被撤销是贷款出问题的主要原因。筛查证明官方测试向量无法撤销这台矿机，年龄要求是它之后的第二道防线。详见<a href="#screen">撤销风险筛查</a>。</p></div></details>
 <details><summary>矿机产出低于预期会怎样？</summary><div><p>不会有不利后果。到期时仍有欠款不算违约，凭证留在矿机代理中继续还款，keeper 每 72 小时领取一次，直到债务还清。目前滞纳金为 0。</p></div></details>
 <details><summary>提前还款能少付费用吗？</summary><div><p>您可以随时提前还款，但固定费用不变。费用就是全部成本，提前还款不会减少费用。</p></div></details>
-<details><summary>我需要 BNB 吗？</summary><div><p>只有在您自己领取收益或自己在 BSC 上推送矿机报告时才需要。keeper 会替您推送报告；2026 年 12 月 15 日之前，推送和计划内领取的 LayerZero 费用也由它承担。在 X Layer 上，您需要 OKB 支付 gas。</p></div></details>
+<details><summary>我需要 BNB 吗？</summary><div><p>只有在您自己领取收益或自己在 BSC 上推送矿机报告时才需要。keeper 会替您推送报告；截至 2026 年 12 月 31 日，推送和计划内领取的 LayerZero 费用也由它承担。在 X Layer 上，您需要 OKB 支付 gas。</p></div></details>
 <details><summary>为什么借款发放到我的钱包，而不是矿机代理？</summary><div><p>资金池始终把借款发放给工厂合约记录的该矿机代理的借款人，任何调用参数都无法更改收款地址。</p></div></details>
 <details><summary>我把矿机直接跨链到了矿机代理，它算借款依据吗？</summary><div><p>暂时不算。跨链铸造凭证时不会触发登记，所以这张凭证处于未登记状态。请在没有进行中贷款时，在矿机页面上使用<em>登记凭证</em>，或把它取回。请始终先跨链到自己的钱包。</p></div></details>
 <details><summary>取回凭证后，矿机代理里又到账了 BEM，会丢失吗？</summary><div><p>不会。使用<em>领取迟到的 BEM</em> 即可转给您。详见<a href="#repay">还款与取回凭证</a>。</p></div></details>

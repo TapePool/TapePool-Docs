@@ -62,7 +62,7 @@ the browser languages.
 Facts come from the TapePool repository, which is read-only for this repo: `docs/SPEC.md` (normative, amended through
 redeploy 4), the redeploy 4 launch values, `docs/RISK_DISCLOSURE.md`, the app's own copy, and the public launch posts.
 Live values at the time of writing: fees 0.25% (7 days) and 0.5% (14 days), minimum fee 0.001 BEM, minimum advance
-0.01 BEM, late fee 0, operating fee 0 OKB, LayerZero fees sponsored by the keeper until 2026-12-15.
+0.01 BEM, late fee 0, operating fee 0 OKB, LayerZero fees sponsored by the keeper through 2026-12-31.
 
 ## Screenshots
 

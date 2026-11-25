@@ -38,6 +38,6 @@ Nội dung tiếng Trung nằm trong `src/pages.zh.js` (21 trang, cùng id với
 - Thuật ngữ mới ở trang 合约地址 (chưa qua người bản ngữ duyệt): 实现合约 (implementation), 矿机数据源接收合约 / 报告合约, 晶体管合约 (Transistors), 部署者 (deployer).
 
 **Cần owner xác nhận trước khi public** (áp dụng cho cả bản tiếng Anh):
-- Ngày keeper tài trợ phí LayerZero đến 15/12/2026 lấy từ bài đăng X ngày 16/11.
+- Ngày keeper tài trợ phí LayerZero đến hết 31/12/2026 theo quyết định của owner ngày 25/11/2026 (bài đăng X ngày 16/11 ghi 15/12).
 
 **Ảnh minh hoạ:** ảnh UI tiếng Trung được chụp từ fixture của app với `?lang=cn`. Sơ đồ "一笔贷款如何运作" có bản tiếng Trung; ba sơ đồ còn lại (reward paths, repayment release, no price-triggered liquidations) chỉ có bản tiếng Anh, chú thích có ghi "（图为英文）".

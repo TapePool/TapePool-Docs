@@ -91,7 +91,7 @@ ${table(['What', 'Since', 'Status'], [
 <h2>Launch terms</h2>
 <ul>
 <li>BEM fee: 0.25% for 7 days, 0.5% for 14 days, at least 0.001 BEM per loan. See <a href="#terms">Terms and fees</a>.</li>
-<li>Operating fee: <strong>0 OKB</strong>. Until <strong>December 15, 2026</strong>, the keeper wallet covers the LayerZero fees of rig report pushes and scheduled harvests. A borrower's only network cost is X Layer gas.</li>
+<li>Operating fee: <strong>0 OKB</strong>. Through <strong>December 31, 2026</strong>, the keeper wallet covers the LayerZero fees of rig report pushes and scheduled harvests. A borrower's only network cost is X Layer gas.</li>
 <li>Late fee: <strong>0</strong>. The owner committed in public to keep it at 0 until December 7, 2026; any later rate applies to new loans only.</li>
 </ul>
 <h2>Planned</h2>
@@ -364,7 +364,7 @@ ${table(['Limit', 'Rule'], [
 <ul>
 <li><strong>X Layer gas, in OKB:</strong> creating an agent, moving a voucher, borrowing, repaying and releasing. X Layer gas is small (a base fee around 0.02 gwei).</li>
 <li><strong>BSC gas, in BNB:</strong> only if you harvest yourself or push a report yourself.</li>
-<li>Until December 15, 2026, the keeper wallet pays the LayerZero fees for report pushes and scheduled harvests.</li>
+<li>Through December 31, 2026, the keeper wallet pays the LayerZero fees for report pushes and scheduled harvests.</li>
 </ul>
 <p>No loan can run across the first BEM halving: a borrow is refused when its term would end within 30 days of it (August 2030).</p>`},
 
@@ -480,7 +480,7 @@ bucket     = min( 31, ceil( debt share ÷ 500 ) )   5% steps</code></pre>
 <p>The current feed was deployed and locked on November 16, 2026.</p>
 <h2>Who sends reports</h2>
 <ul>
-<li><strong>The keeper</strong> pushes a report when you click <em>Refresh rig data</em>, rate-limited to 3 pushes per rig per UTC day and 10 per rolling 7 days. Until December 15, 2026 it pays the LayerZero fee.</li>
+<li><strong>The keeper</strong> pushes a report when you click <em>Refresh rig data</em>, rate-limited to 3 pushes per rig per UTC day and 10 per rolling 7 days. Through December 31, 2026 it pays the LayerZero fee.</li>
 <li><strong>Anyone</strong> can push reports on BSC, paying the LayerZero fee in BNB. If the keeper does not answer, the app offers to do it from your wallet. A 16-rig push cost about 0.002 BNB in LayerZero fees in November 2026.</li>
 </ul>
 <h2>If the feed stops</h2>
@@ -671,7 +671,7 @@ ${table(['Contract', 'Address', 'What it does'], [
 <details><summary>Why does my rig need 3 days and a screen pass?</summary><div><p>Revocation is the main way a loan can fail. The screen proves the official test vectors cannot revoke the rig, and the age rule is a second line behind it. See <a href="#screen">Revocation screen</a>.</p></div></details>
 <details><summary>What happens if my rig mines less than expected?</summary><div><p>Nothing bad. A shortfall at maturity is not a default. The voucher stays in the agent and keeps repaying, and the keeper harvests every 72 hours until the debt is cleared. The late fee is 0 today.</p></div></details>
 <details><summary>Can I repay early to pay less?</summary><div><p>You can repay early at any time, but the flat fee stays the same. It is the whole cost of the advance.</p></div></details>
-<details><summary>Do I need BNB?</summary><div><p>Only if you harvest yourself or push a rig report yourself on BSC. The keeper pushes reports for you, and until December 15, 2026 it pays the LayerZero fees of pushes and scheduled harvests. On X Layer you need OKB for gas.</p></div></details>
+<details><summary>Do I need BNB?</summary><div><p>Only if you harvest yourself or push a rig report yourself on BSC. The keeper pushes reports for you, and through December 31, 2026 it pays the LayerZero fees of pushes and scheduled harvests. On X Layer you need OKB for gas.</p></div></details>
 <details><summary>Why does the advance go to my wallet and not to the agent?</summary><div><p>The pool always sends the advance to the agent's borrower, recorded by the factory. Nothing in a call can redirect it.</p></div></details>
 <details><summary>I bridged my rig straight to my agent. Is it collateral?</summary><div><p>Not yet. A voucher that lands without the hook (bridging mints without it) is not registered. Use <em>Register</em> on the Rigs page while no loan is open, or take it back. Always bridge to your own wallet first.</p></div></details>
 <details><summary>BEM arrived in my agent after I took the voucher back. Is it lost?</summary><div><p>No. Use <em>Claim late BEM</em>; it sends that BEM to you. See <a href="#repay">Repayment and release</a>.</p></div></details>
