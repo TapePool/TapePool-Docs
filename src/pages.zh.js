@@ -3,7 +3,7 @@
 // Latin letters or digits, Chinese first with the English name in parentheses for TapePool's own components on first
 // mention, no 抵押, no 无清算, no yield words, caps as shares. UI words follow the app's own Chinese strings.
 // Check: npm run check:cn
-import { helpers, X, TAPEOUT, APP, C } from './helpers.js';
+import { helpers, X, TAPEOUT, APP, C, YOUTUBE, YOUTUBE_EMBED } from './helpers.js';
 
 export const edition = '2026 年 11 月版';
 export const reviewed = '2026 年 11 月 19 日';
@@ -103,6 +103,21 @@ ${table(['内容', '状态'], [
   ['30 天期限。在积累更多数据之前暂缓；它需要新的电路和新的资金池部署。', '<span class="tag plan">暂缓</span>'],
 ])}
 <div class="note">资金池的早期部署均已停用：供应上限为 0，借款已暂停，但仍持有份额的用户可以照常提取。当前正在使用的合约见<a href="#contracts">合约地址</a>。</div>`},
+
+/* ───────────────────────── 视频教程 ───────────────────────── */
+tutorial:{group:'视频教程',title:'视频教程',nav:'视频教程',lead:'观看如何在 TapePool 应用中存入 BEM，以及以矿机借款。',body:`
+<div class="badges"><span class="badge">出借与借款</span><span class="badge">English · 中文</span></div>
+<div class="video"><iframe src="${YOUTUBE_EMBED}" title="TapePool 视频教程：借款与出借（英文与中文）" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<p><a href="${YOUTUBE}" target="_blank" rel="noreferrer">在 YouTube 上观看 ↗</a>。视频提供英文与中文。</p>
+<h2>对照阅读</h2>
+<p>文字页面涵盖同样的步骤，并附有数字和背后的规则。</p>
+<div class="cards">
+<a class="card" href="#supply"><strong>出借 BEM</strong><p>存入 BEM 获得 tpBEM，随时提取闲置 BEM。</p><small>存入与提取</small></a>
+<a class="card" href="#borrow"><strong>以矿机借款</strong><p>第一笔借款的每一步：从可借矿机到发起借款交易。</p><small>借款</small></a>
+<a class="card" href="#terms"><strong>借贷条款与费用</strong><p>债务上限、固定费用、最低金额和计算示例。</p><small>了解数字</small></a>
+<a class="card" href="#risks"><strong>风险</strong><p>出借人和借款人可能遇到的问题，以及谁可以修改什么。</p><small>存入前请阅读</small></a>
+</div>
+<div class="note">应用更新后，视频中的界面可能与当前应用略有不同。应用地址：<a href="${APP}" target="_blank" rel="noreferrer">app.tapepool.io</a>；签名前请对照<a href="#contracts">合约地址</a>核对 TapePool 的合约。</div>`},
 
 /* ───────────────────────── 使用应用 ───────────────────────── */
 app:{group:'使用应用',title:'使用应用',nav:'应用导览',lead:'应用是一个静态页面：通过公共 RPC 读取合约，只通过您自己的钱包签名。',body:`

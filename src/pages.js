@@ -3,7 +3,7 @@
 // House style: English; no em dash; facts from the TapePool repository (docs/SPEC.md is normative, then the
 // redeploy-4 launch values); caps as shares of the pool; no return promises, no audit wording; every app
 // screenshot is labelled "Sample data". Rebuild after editing: node build.mjs
-import { helpers, X, TAPEOUT, APP, C } from './helpers.js';
+import { helpers, X, TAPEOUT, APP, C, YOUTUBE, YOUTUBE_EMBED } from './helpers.js';
 
 export const edition = 'November 2026';
 export const reviewed = 'November 19, 2026';
@@ -103,6 +103,21 @@ ${table(['What', 'Status'], [
   ['A 30-day term. Deferred until there is more data; it needs a new circuit and a new pool deployment.', '<span class="tag plan">Deferred</span>'],
 ])}
 <div class="note">Earlier deployments of the pool are retired: their supply cap is 0 and borrows are paused, but anyone who still holds shares in them can withdraw. The contracts in use today are on <a href="#contracts">Contract addresses</a>.</div>`},
+
+/* ───────────────────────── Tutorial ───────────────────────── */
+{id:'tutorial',group:'Tutorial',title:'Video tutorial',nav:'Video tutorial',lead:'Watch how to supply BEM and borrow against a rig in the TapePool app.',body:`
+<div class="badges"><span class="badge">Supply and borrow</span><span class="badge">English · 中文</span></div>
+<div class="video"><iframe src="${YOUTUBE_EMBED}" title="TapePool Tutorial: Borrow and Supply (EN/中文)" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<p><a href="${YOUTUBE}" target="_blank" rel="noreferrer">Watch on YouTube ↗</a>. The video is in English and 中文.</p>
+<h2>Read along</h2>
+<p>The written pages cover the same steps, with the numbers and the rules behind them.</p>
+<div class="cards">
+<a class="card" href="#supply"><strong>Lend BEM</strong><p>Supply BEM, receive tpBEM, and withdraw idle BEM.</p><small>Supply and withdraw</small></a>
+<a class="card" href="#borrow"><strong>Borrow against a rig</strong><p>Every step of a first advance, from a ready rig to the borrow transaction.</p><small>Borrow</small></a>
+<a class="card" href="#terms"><strong>Terms and fees</strong><p>Debt caps, the flat fee, minimums and worked examples.</p><small>Know the numbers</small></a>
+<a class="card" href="#risks"><strong>Risks</strong><p>What can go wrong for lenders and borrowers, and who can change what.</p><small>Read before you deposit</small></a>
+</div>
+<div class="note">Screens in the video may differ slightly from the app as it is updated. The app is at <a href="${APP}" target="_blank" rel="noreferrer">app.tapepool.io</a>; check TapePool's contracts against <a href="#contracts">Contract addresses</a> before you sign.</div>`},
 
 /* ───────────────────────── Use the app ───────────────────────── */
 {id:'app',group:'Use the app',title:'Using the app',nav:'App tour',lead:'A static page that reads the contracts through public RPCs and signs only through your own wallet.',body:`

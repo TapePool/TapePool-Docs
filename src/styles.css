@@ -167,6 +167,9 @@ ol.steps>li::before{content:counter(s);position:absolute;left:0;top:0;width:30px
 ol.steps>li:not(:last-child)::after{content:"";position:absolute;left:15px;top:34px;bottom:2px;width:1px;background:var(--line)}
 ol.steps>li>strong:first-child{display:block;margin-bottom:2px}
 
+/* video */
+.video{position:relative;aspect-ratio:16/9;margin:18px 0 10px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel);box-shadow:var(--shadow)}
+.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 /* figures */
 figure{margin:22px 0 28px}
 figure img{display:block;max-width:100%;height:auto;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);cursor:zoom-in;background:var(--panel)}

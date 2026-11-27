@@ -29,6 +29,9 @@ export function helpers(lang) {
 export const X = 'https://x.com/Tape_Pool';
 export const TAPEOUT = 'https://tapeout.net';
 export const APP = 'https://app.tapepool.io';
+// The tutorial video (TapePool channel). The embed uses the no-cookie domain.
+export const YOUTUBE = 'https://youtu.be/s8IG_HjWv8Q';
+export const YOUTUBE_EMBED = 'https://www.youtube-nocookie.com/embed/s8IG_HjWv8Q';
 const EXPLORER = { xlayer: 'https://www.oklink.com/xlayer/address/', bsc: 'https://bscscan.com/address/' };
 
 /**
